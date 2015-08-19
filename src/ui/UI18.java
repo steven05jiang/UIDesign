@@ -2,8 +2,10 @@ package ui;
 
 import java.awt.GridLayout;
 import java.awt.Menu;
+import java.awt.MenuShortcut;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 
@@ -48,6 +50,7 @@ class MainWindow extends JFrame implements ActionListener{
 class SubWindow extends JFrame implements ActionListener{
 	JMenuBar menuBar;
 	MyMenu menu1, menu2;
+	JMenu menu3;
 	JLabel label;
 	public SubWindow(){
 		setSize(400,200);
@@ -56,23 +59,33 @@ class SubWindow extends JFrame implements ActionListener{
 		label = new JLabel("", JLabel.CENTER);
 		menu1 = new MyMenu("Sport","Basketball","Football","Swimming");
 		menu2 = new MyMenu("Music","Violin","Guitar","Piano");
+		menu3 = new JMenu("System");
+		JMenuItem exit = new JMenuItem("Exit");
+		menu1.setMnemonic(KeyEvent.VK_Z);
+		menu2.setMnemonic(KeyEvent.VK_X);
+		menu3.setMnemonic(KeyEvent.VK_C);
+		exit.setMnemonic(KeyEvent.VK_A);
+		menu3.add(exit);
 		menuBar.add(menu1);
 		menuBar.add(menu2);
+		menuBar.add(menu3);
 		menu1.mi1.addActionListener(this);
 		menu1.mi2.addActionListener(this);
 		menu1.mi3.addActionListener(this);
 		menu2.mi1.addActionListener(this);
 		menu2.mi2.addActionListener(this);
 		menu2.mi3.addActionListener(this);
+		exit.addActionListener(this);
 		add(menuBar);
 		add(label);
 		setVisible(false);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().getClass() == JMenuItem.class){
+		if(e.getActionCommand().equals("Exit"))
+			System.exit(0);
+		else
 			label.setText(e.getActionCommand());
-		}
 	}
 }
 
